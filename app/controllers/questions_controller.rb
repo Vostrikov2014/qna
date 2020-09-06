@@ -60,10 +60,10 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body)devi
   end
 
   def load_answer
-    @answers = @question.answers
+    #@answers = @question.answers
   end
 end

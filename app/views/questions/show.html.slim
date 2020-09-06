@@ -8,10 +8,12 @@ h2 Answers
     - if current_user&.author?(answer)
       p = link_to 'Delete answer', answer_path(answer), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
 
-= form_with model: @answer, local: true do |f|
-  = f.label :body, 'Answer'
-  = f.text_area :body
-  = f.submit 'Reply'
+= form_with model: @question, local: true do |form|
+  = form.label :title
+    = fields_for :answer, @answer do |f|
+      = f.label :body, 'Answer'
+      = f.text_area :body
+      = f.submit 'Reply'
 
 - if current_user&.author?(@question)
   p = link_to 'Delete question', question_path(@question), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
