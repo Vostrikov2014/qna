@@ -1,7 +1,5 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show edit update destroy]
-  before_action :load_answer, only: %i[show]
 
   def index
     @questions = Question.all
@@ -12,7 +10,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.new
+    question
   end
 
   def edit
@@ -30,8 +28,8 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
+    if question.update(question_params)
+      redirect_to question
     else
       render :edit
     end
@@ -50,20 +48,21 @@ class QuestionsController < ApplicationController
   private
 
   def question
-    @questions ||= params[:id] ? Question.find(params[:id]) : Question.new
+    @question ||= params[:id] ? Question.find(params[:id]) : Question.new
   end
-
   helper_method :question
 
-  def load_question
-    @question = Question.find(params[:id])
+  def answer
+    @answer ||= question.answers.new
   end
+  helper_method :answer
+
+  def answers
+    @answers ||= question.reload.answers
+  end
+  helper_method :answers
 
   def question_params
     params.require(:question).permit(:title, :body)
-  end
-
-  def load_answer
-    #@answers = @question.answers
   end
 end

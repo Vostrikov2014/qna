@@ -1,21 +1,16 @@
-h1 = @question.title
-p = @question.body
+h1 = question.title
+p = question.body
 
 h2 Answers
-- @question.answers.each do |answer|
+- question.answers.each do |answer|
   - if answer.persisted?
     p = answer.body
     - if current_user&.author?(answer)
       p = link_to 'Delete answer', answer_path(answer), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
 
-= form_with model: @question, local: true do |form|
-  = form.label :title
-    = fields_for :answer, @answer do |f|
-      = f.label :body, 'Answer'
-      = f.text_area :body
-      = f.submit 'Reply'
+= render 'answers/form'
 
-- if current_user&.author?(@question)
-  p = link_to 'Delete question', question_path(@question), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
+- if current_user&.author?(question)
+  p = link_to 'Delete question', question_path(question), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
 
 p = link_to 'Back', questions_path
