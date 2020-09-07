@@ -1,19 +1,20 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :find_question, only: %i[index new create]
-  before_action :load_answer, only: %i[show edit update destroy]
+  #before_action :find_question, only: %i[index new create]
+  #before_action :load_answer, only: %i[show edit update destroy]
+  before_action :find_question, only: %i[create]
+  before_action :load_answer, only: %i[edit update destroy]
 
-  def index
-    @answers = @question.answers
-  end
+  #def index
+  #  @answers = @question.answers
+  #end
 
-  def show
+  #def show
+  #end
 
-  end
-
-  def new
-    @answer = @question.answers.new
-  end
+  #def new
+  #  @answer = @question.answers.new
+  #end
 
   def edit
 
@@ -25,7 +26,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @answer.question
     else
-      render :new
+      render 'questions/show'
     end
   end
 
@@ -42,7 +43,7 @@ class AnswersController < ApplicationController
       @answer.destroy
       redirect_to @answer.question
     else
-      return redirect_to @answer.question, notice: 'Only the author can delete a answer'
+      redirect_to @answer.question, notice: 'Only the author can delete a answer'
     end
   end
 

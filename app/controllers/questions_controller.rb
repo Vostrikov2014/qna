@@ -42,7 +42,7 @@ class QuestionsController < ApplicationController
       question.destroy
       redirect_to questions_path
     else
-      return redirect_to questions_path, notice: 'Only the author can delete a question'
+      redirect_to questions_path, notice: 'Only the author can delete a question'
     end
   end
 
@@ -60,7 +60,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)devi
+    params.require(:question).permit(:title, :body)
   end
 
   def load_answer
