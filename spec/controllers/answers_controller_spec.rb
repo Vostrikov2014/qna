@@ -5,30 +5,30 @@ RSpec.describe AnswersController, type: :controller do
   let(:answer) { create(:answer, question: question) }
   let(:user) { create(:user) }
 
-  describe 'GET #show' do
-    before { get :show, params: {id: answer} }
+  #describe 'GET #show' do
+  #  before { get :show, params: {id: answer} }
+  #
+  # it 'assigns requested answer to answer' do
+  #   expect(assigns(:answer)).to eq answer
+  # end
+  #
+  # it 'renders show view' do
+  #   expect(response).to render_template :show
+  # end
+  #end
 
-    it 'assigns requested answer to @answer' do
-      expect(assigns(:answer)).to eq answer
-    end
-
-    it 'renders show view' do
-      expect(response).to render_template :show
-    end
-  end
-
-  describe 'GET #new' do
-    before { login(user) }
-    before { get :new, params: {question_id: question} }
-
-    it 'assigns a new Answer to answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
+  #describe 'GET #new' do
+  # before { login(user) }
+  # before { get :new, params: {question_id: question} }
+  #
+  # it 'assigns a new Answer to answer' do
+  #   expect(assigns(:answer)).to be_a_new(Answer)
+  # end
+  #
+  # it 'renders new view' do
+  #   expect(response).to render_template :new
+  # end
+  #end
 
   describe 'GET #edit' do
     before { login(user) }
@@ -69,7 +69,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-renders new view' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template :new
+        expect(response).to render_template "questions/show"
       end
     end
   end
