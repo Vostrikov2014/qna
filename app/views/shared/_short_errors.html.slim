@@ -1,6 +1,0 @@
-- if resource&.errors.present?
-  b= "#{resource.errors.count} error(s) detected: "
-  ul
-    - resource.errors.messages.values.each do |message_array|
-      - message_array.each do |message|
-        li= message
