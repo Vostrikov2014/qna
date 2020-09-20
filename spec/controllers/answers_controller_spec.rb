@@ -111,4 +111,38 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'POST #select_best' do
+    before { login(user) }
+
+    context 'author' do
+      before { post :select_best, params: {id: answer, format: :js} }
+
+      it 'assigns the requested answer to @answer' do
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'update best attribute' do
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'render select_best template' do
+        expect(response).to render_template :select_best
+      end
+    end
+
+    context 'not author' do
+      before { post :select_best, params: {id: other_answer, format: :js} }
+
+      it 'not update best attribute' do
+        answer.reload
+        expect(answer.best).to_not eq true
+      end
+
+      it 'returns forbidden' do
+        expect(response).to be_forbidden
+      end
+    end
+  end
 end

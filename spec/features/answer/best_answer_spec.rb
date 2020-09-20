@@ -7,13 +7,8 @@ feature 'User can select best answer', %q(Show me best answer) do
   given(:other_question) { create(:question) }
   given!(:answers) { create_list(:answer, 3, user: user, question: question) }
 
-  scenario "Unauthenticated user can't select best answer" do
-    visit question_path(question)
-    expect(page).to_not have_link 'Select best!'
-  end
-
-  describe 'Authenticated user' do
-    background { login(user) }
+  describe 'Only author can be select best answer' do
+    background { user.author?(question) }
 
     scenario 'select best answer', js: true do
       visit question_path(question)

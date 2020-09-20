@@ -1,6 +1,10 @@
 class Question < ApplicationRecord
   belongs_to :user
-  has_many :answers, -> { order('best DESC, created_at') }, dependent: :destroy
+  has_many :answers, dependent: :destroy
 
   validates :title, :body, presence: true
+
+  def best_answer
+    answers.best_answer.first
+  end
 end
