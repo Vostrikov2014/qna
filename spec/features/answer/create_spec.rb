@@ -1,38 +1,37 @@
 require 'rails_helper'
 
-feature 'The user, being on the question page, can write the answer to the question', %q(
-  An authenticated user can write an answer to a question to help solve a problem
-) do
+feature 'User can give an answer', %q{Only authenticated user can give a response} do
+
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       login(user)
       visit question_path(question)
     end
 
-    scenario 'writes the answer to the question' do
-      fill_in 'Answer', with: 'Test answer'
+    scenario 'create answer' do
+      fill_in 'Answer', with: 'My answer'
       click_on 'Reply'
 
-      expect(page).to have_content 'Your answer added'
-      expect(page).to have_content 'Test answer'
+      expect(current_path).to eq question_path(question)
+      expect(page).to have_content 'My answer'
     end
 
-    scenario 'writes an answer to a question with errors' do
+    scenario 'create answer with errors' do
       click_on 'Reply'
 
-      expect(page).to have_content "Answer can't be blank"
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
-  describe 'Unauthenticated user' do
-    scenario 'trying to answer a question' do
+  describe 'Unauthenticated user', js: true do
+    scenario 'create answer' do
       visit question_path(question)
       click_on 'Reply'
 
-      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+      expect(page).to have_content 'You need to sign in continuing'
     end
   end
 end

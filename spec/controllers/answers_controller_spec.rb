@@ -5,31 +5,6 @@ RSpec.describe AnswersController, type: :controller do
   let(:answer) { create(:answer, question: question) }
   let(:user) { create(:user) }
 
-  #describe 'GET #show' do
-  #  before { get :show, params: {id: answer} }
-  #
-  # it 'assigns requested answer to answer' do
-  #   expect(assigns(:answer)).to eq answer
-  # end
-  #
-  # it 'renders show view' do
-  #   expect(response).to render_template :show
-  # end
-  #end
-
-  #describe 'GET #new' do
-  # before { login(user) }
-  # before { get :new, params: {question_id: question} }
-  #
-  # it 'assigns a new Answer to answer' do
-  #   expect(assigns(:answer)).to be_a_new(Answer)
-  # end
-  #
-  # it 'renders new view' do
-  #   expect(response).to render_template :new
-  # end
-  #end
-
   describe 'GET #edit' do
     before { login(user) }
     before { get :edit, params: {id: answer} }
@@ -133,6 +108,40 @@ RSpec.describe AnswersController, type: :controller do
       it 'redirects to index' do
         delete :destroy, params: {id: answer}
         expect(response).to redirect_to answer.question
+      end
+    end
+  end
+
+  describe 'POST #select_best' do
+    before { login(user) }
+
+    context 'author' do
+      before { post :select_best, params: {id: answer, format: :js} }
+
+      it 'assigns the requested answer to @answer' do
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'update best attribute' do
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'render select_best template' do
+        expect(response).to render_template :select_best
+      end
+    end
+
+    context 'not author' do
+      before { post :select_best, params: {id: other_answer, format: :js} }
+
+      it 'not update best attribute' do
+        answer.reload
+        expect(answer.best).to_not eq true
+      end
+
+      it 'returns forbidden' do
+        expect(response).to be_forbidden
       end
     end
   end
