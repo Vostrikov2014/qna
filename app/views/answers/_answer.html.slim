@@ -1,7 +1,19 @@
 - if answer.persisted?
+
+  - if answer.files.attached?
+    - answer.files.each do |file|
+      p = link_to file.filename.to_s, url_for(file)
+
   = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
-    = f.text_area :body
-    = f.submit 'Edit'
+    p
+      = f.label :body, 'Answer'
+      = f.text_area :body
+      - if current_user&.author?(answer)
+        = f.submit 'Edit'
+    p
+      - if current_user&.author?(answer)
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
 
   = render 'shared/errors', resource: answer
 
