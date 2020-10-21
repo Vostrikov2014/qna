@@ -29,6 +29,12 @@ feature 'features/answer/create_spec.rb - Пользователь может о
       expect(page).to have_content ""
     end
 
+    scenario 'Authentication user create answer with error' do
+      click_on 'Reply'
+
+      expect(page).to have_content "Body can't be blank"
+    end
+
     scenario 'прикрепить файл к ответу / replay a question with attached file' do
       fill_in 'Answer', with: 'text text text'
 

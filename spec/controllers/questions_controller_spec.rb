@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
-  let!(:question) { create(:question, user: user) }
+  let(:question) { create(:question, user: user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
     before { get :index }
 
-    it 'populates an array of all questions' do
+    it 'заполняет массив всех вопросов / populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
 
@@ -21,7 +21,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'GET #show' do
     before { get :show, params: { id: question } }
 
-    it 'assigns the requested question to @question' do
+    it 'назначает запрошенный вопрос для @question / assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
 
@@ -34,11 +34,11 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
     before { get :new }
 
-    it 'assigns a new Question to @question' do
+    it 'назначает новый вопрос для @question / assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
-    it 'renders new view' do
+    it 'отображает просмотр new / renders new view' do
       expect(response).to render_template :new
     end
   end
@@ -47,11 +47,11 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
     before { get :edit, params: { id: question } }
 
-    it 'assigns the requested question to @question' do
+    it 'назначает запрошенный вопрос для @question / assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
 
-    it 'renders edit view' do
+    it 'отображает просмотр edit / renders edit view' do
       expect(response).to render_template :edit
     end
   end
@@ -59,28 +59,28 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'POST #create' do
     before { login(user) }
 
-    context 'with valid attributes' do
-      it 'saves a question in the database' do
+    context 'с действительными атрибутами / with valid attributes' do
+      it 'сохраняет вопрос в базе данных / saves a question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
-      it 'authenticated user to be author of question' do
+      it 'аутентифицированный пользователь будет автором вопроса / authenticated user to be author of question' do
         post :create, params: {question: attributes_for(:question)}
         expect(user).to be_author(assigns(:question))
       end
 
-      it 'redirects to show' do
+      it 'отображает просмотр show / redirects to show' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
       end
     end
 
-    context 'with invalid attributes' do
-      it 'does not save the question' do
+    context 'с недопустимыми атрибутами / with invalid attributes' do
+      it 'не сохраняет вопрос / does not save the question' do
         expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
       end
 
-      it 're-renders new view' do
+      it 'повторно отображает новый вид / re-renders new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
       end
@@ -90,14 +90,14 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'PATCH #update' do
     before { login(user) }
 
-    context 'with valid attributes' do
-      it 'assigns requested question to @question' do
-        patch :update, params: {id: question, question: attributes_for(:question)}
+    context 'с действительными атрибутами / with valid attributes' do
+      it 'устанавливает переменную question в объект @question по id / assigns requested question to @question' do
+        patch :update, params: { id: question, question: attributes_for(:question), format: :js }
         expect(assigns(:question)).to eq question
       end
 
-      it 'changes question attributes' do
-        patch :update, params: {id: question, question: {title: 'new title', body: 'new body'}}
+      it 'изменяет существующие атрибуты / changes question attributes' do
+        patch :update, params: { id: question, question: {title: 'new title', body: 'new body'}, format: :js}
         question.reload
 
         expect(question.title).to eq 'new title'
@@ -105,15 +105,15 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirects to updated question' do
-        patch :update, params: {id: question, question: attributes_for(:question)}
+        patch :update, params: {id: question, question: attributes_for(:question), format: :js}
         expect(response).to redirect_to question
       end
     end
 
-    context 'with invalid attributes' do
-      before { patch :update, params: {id: question, question: attributes_for(:question, :invalid)} }
+    context 'с недопустимыми атрибутами / with invalid attributes' do
+      before { patch :update, params: {id: question, question: attributes_for(:question, :invalid), format: :js } }
 
-      it 'does not change question' do
+      it 'не меняет вопрос / does not change question' do
         question.reload
 
         expect(question.title).to_not eq nil
@@ -134,23 +134,23 @@ RSpec.describe QuestionsController, type: :controller do
     let!(:question) { user.questions.create(attributes_for(:question)) }
     let!(:other_question) { create(:question) }
 
-    context 'author' do
-      it 'deletes the question' do
+    context 'автор / author' do
+      it 'удалить вопрос / deletes the question' do
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
       end
 
-      it 'redirects to index' do
+      it 'перенаправляет на индекс / redirects to index' do
         delete :destroy, params: { id: question }
         expect(response).to redirect_to questions_path
       end
     end
 
-    context 'not author' do
-      it 'no deletes the question' do
+    context 'не автор / not author' do
+      it 'нет удаляет вопрос / no deletes the question' do
         expect { delete :destroy, params: { id: other_question } }.to_not change(Question, :count)
       end
 
-      it 'redirects to index' do
+      it 'перенаправляет на index / redirects to index' do
         delete :destroy, params: { id: other_question }
         expect(response).to redirect_to questions_path
       end
