@@ -1,2 +1,2 @@
 $('#flash').html('<%= j render partial: 'shared/flash' %>')
-$('#answer-<%= @answer.id %>').remove();
+$('#answer-<%= @answer.id %>').detach();

@@ -23,14 +23,18 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params.merge(user: current_user))
 
     if @question.save
-      redirect_to @question
+      redirect_to @question, notice: 'Your question successfully created.'
     else
       render :new
     end
   end
 
   def update
-    @question.update(question_params)
+    if @question.update(question_params)
+      redirect_to @question
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -46,11 +50,11 @@ class QuestionsController < ApplicationController
   private
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.with_attached_files.find(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [])
   end
 
   def check_question_author

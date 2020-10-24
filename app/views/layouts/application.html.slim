@@ -8,24 +8,12 @@ html
     = javascript_pack_tag  "application", 'data-turbolinks-track': 'reload'
 
   body
-    .navbar.navbar-default.navbar-static-top
-      .container
-        a.navbar-brand href="/"Qna
-        .navbar-collapse.collapse.navbar-responsive-collapse
-          ul.nav.navbar-nav
-            - if user_signed_in?
-              = link_to 'Log out', destroy_user_session_path, method: :delete
-            - else
-              = link_to 'Sign in', new_user_session_path
-              = link_to 'Sign up', new_user_registration_path
-
+    = render 'shared/nav'
+    /= render 'shared/flash'
     .container
       .row
         .col-lg-9
           p class="notice" = notice
           p class="alert" = alert
-
           = yield
-
-      footer
-        /p &copy; Rubyist.ru
+    = render 'shared/footer'
