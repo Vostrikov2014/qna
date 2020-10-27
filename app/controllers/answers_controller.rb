@@ -10,7 +10,6 @@ class AnswersController < ApplicationController
   end
 
   def show
-
   end
 
   def new
@@ -18,11 +17,11 @@ class AnswersController < ApplicationController
   end
 
   def edit
-
   end
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))
+    @answer.save
   end
 
   def update
@@ -48,7 +47,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body, files: [], links_attributes: [:name, :url])
   end
 
   def check_question_author

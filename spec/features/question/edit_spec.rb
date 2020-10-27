@@ -23,7 +23,7 @@ feature 'User can edit his question', %q{
       background do
         visit question_path(question)
 
-        click_on 'Edit question'
+        click_on 'Edit'
       end
 
       scenario 'without errors' do
@@ -60,7 +60,7 @@ feature 'User can edit his question', %q{
     scenario "tries to edit other user's question" do
       visit question_path(other_question)
 
-      expect(page).to_not have_link 'Edit question'
+      expect(page).to_not have_link 'Edit'
     end
   end
 end
