@@ -11,7 +11,7 @@ feature "The author can delete their own question, but they can't delete someone
       login(question.user)
       visit question_path(question)
       expect(page).to have_content 'Bad question'
-      click_on 'Delete question'
+      click_on 'Delete'
       expect(page).to_not have_content 'Bad question'
 
       expect(page).to have_content 'Question was successfully deleted.'
@@ -20,12 +20,12 @@ feature "The author can delete their own question, but they can't delete someone
     scenario 'without being the author of the question' do
       login(user)
       visit question_path(question)
-      expect(page).to_not have_link 'Delete question'
+      expect(page).to_not have_link 'Delete'
     end
   end
 
   scenario 'Unauthenticated user tries to delete a question' do
     visit question_path(question)
-    expect(page).to_not have_link 'Delete question'
+    expect(page).to_not have_link 'Delete'
   end
 end

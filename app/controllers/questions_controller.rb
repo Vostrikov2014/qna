@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: %i[show edit update destroy]
   before_action :check_question_author, only: :update
 
   def index
@@ -8,15 +8,15 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = Answer.new
+    @answer = @question.answers.build
   end
 
   def new
     @question = Question.new
+    @question.build_reward
   end
 
   def edit
-
   end
 
   def create
@@ -40,9 +40,9 @@ class QuestionsController < ApplicationController
   def destroy
     if current_user.author?(@question)
       @question.destroy
-      redirect_to questions_path, notice: 'Question deleted'
+      redirect_to questions_path, notice: 'Question was successfully deleted.'
     else
-      redirect_to questions_path, notice: 'Only the author can delete a question'
+      return redirect_to questions_path, notice: 'Only the author can delete a question'
     end
   end
 
@@ -54,7 +54,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body, files: [], links_attributes: %i[name url], reward_attributes: %i[title file])
   end
 
   def check_question_author

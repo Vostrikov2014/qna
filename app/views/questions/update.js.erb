@@ -1,7 +1,9 @@
-<% if @question.errors.present? %>
-$('.question_errors').html('<%= render 'shared/errors', resource: @question %>')
+<% if @question.links.any?(&:gist?) %>
+  window.location.reload(false); // fix partial view of question script
 <% else %>
-var form = document.querySelector('.form-group')
-form.classList.add('hidden')
-$('#question-<%= @question.id %>').html('<%= j render @question %>')
+  <% if @question.errors.blank? %>
+    $('#question').replaceWith('<%= j render @question %>');
+  <% else %>
+    $('#question-<%= @question.id %>-errors').html('<%= j render 'shared/errors', resource: @question %>');
+  <% end %>
 <% end %>

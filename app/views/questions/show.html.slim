@@ -1,20 +1,10 @@
 = render @question
 
-h2 Answers:
-
+h2 Answers
 .answers
   = render @question.answers
 
-.answer-errors
-  = render 'shared/errors', resource: @answer
-
-= form_with model: [@question, @answer], class: 'new-answer' do |f|
-  p
-    = f.label :body, 'Answer'
-    = f.text_area :body
-    = f.submit 'Reply'
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true
+- if user_signed_in?
+  = render 'answers/form', answer: @answer
 
 p = link_to 'Back', questions_path

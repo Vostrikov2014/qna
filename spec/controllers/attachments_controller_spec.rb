@@ -11,7 +11,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
     subject { delete :destroy, params: { id: attachment, format: :js } }
 
-    context 'вопрос принадлежит пользователю / user is question owner' do
+    context 'user is question owner' do
       let!(:question) { create(:question, user: user) }
 
       it { expect { subject }.to change(ActiveStorage::Attachment, :count).by(-1) }
@@ -21,7 +21,7 @@ RSpec.describe AttachmentsController, type: :controller do
       end
     end
 
-    context 'вопрос не принадлежит пользователю / user is not question owner' do
+    context 'user is not question owner' do
       let!(:question) { create(:question, user: wrong_user) }
 
       it { expect { subject }.to_not change(ActiveStorage::Attachment, :count) }

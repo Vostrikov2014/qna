@@ -10,7 +10,7 @@ feature 'User can edit his answer', %q{In order to correct mistakes} do
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(question)
 
-    expect(page).to_not have_link 'Edit answer'
+    expect(page).to_not have_link 'Edit'
   end
 
   describe 'Authenticated user' do
@@ -23,7 +23,7 @@ feature 'User can edit his answer', %q{In order to correct mistakes} do
         # save_and_open_page
 
         within "#answer-#{answer.id}" do
-          click_on 'Edit answer'
+          click_on 'Edit'
 
           fill_in 'answer[body]', with: 'edited answer'
 
@@ -37,7 +37,7 @@ feature 'User can edit his answer', %q{In order to correct mistakes} do
 
       scenario 'with some errors' do
         within "#answer-#{answer.id}" do
-          click_on 'Edit answer'
+          click_on 'Edit'
 
           fill_in 'answer[body]', with: ''
 
@@ -53,7 +53,7 @@ feature 'User can edit his answer', %q{In order to correct mistakes} do
     scenario "tries to edit other user's answer" do
       visit question_path(other_question)
 
-      expect(page).to_not have_link 'Edit answer'
+      expect(page).to_not have_link 'Edit'
     end
   end
 end
