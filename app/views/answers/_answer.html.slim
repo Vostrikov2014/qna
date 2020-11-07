@@ -4,6 +4,15 @@
 
     - is_author = current_user&.author?(answer)
 
+    div id="vote-answer-#{answer.id}"
+      p
+        span Rating:
+        span.rating= answer.rating
+
+        - if current_user
+          - unless is_author
+            = render 'votes/block', resource: answer
+
     - if answer.files.attached?
       - answer.files.each do |file|
         p id="attachment-#{file.id}"
