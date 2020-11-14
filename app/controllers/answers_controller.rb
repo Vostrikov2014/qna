@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: %i[show edit update destroy select_best]
   before_action :check_answer_author, only: %i[update destroy]
   before_action :check_question_author, only: :select_best
+  after_action :publish_answer, only: :create
 
   include Voted
 
@@ -12,6 +13,7 @@ class AnswersController < ApplicationController
   end
 
   def show
+    @comment = @answer.comments.build
   end
 
   def new
@@ -62,5 +64,10 @@ class AnswersController < ApplicationController
     unless current_user.author?(@answer)
       head(:forbidden)
     end
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+    ActionCable.server.broadcast("questions_#{@answer.question_id}_answers", @answer.attributes.merge(rating: @answer.rating))
   end
 end

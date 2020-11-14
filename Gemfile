@@ -18,6 +18,8 @@ gem 'jquery-rails'
 gem 'bootstrap', '~> 4.5.0'
 gem "twitter-bootstrap-rails"
 gem 'cocoon'
+gem 'coffee-rails', '~> 5.0'
+gem 'gon'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
