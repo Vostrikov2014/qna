@@ -26,4 +26,26 @@ feature 'User can sign in', %q{
 
     expect(page).to have_content 'Invalid Email or password.'
   end
+
+  cenario 'User can sign in with Github account' do
+    click_on "Sign in with GitHub"
+    expect(page).to have_content 'Successfully authenticated from Github account.'
+  end
+
+  scenario 'App handles an authentication error from Github' do
+    OmniAuth.config.mock_auth[:github] = :invalid_credentials
+    click_on "Sign in with GitHub"
+    expect(page).to have_content 'Invalid credentials'
+  end
+
+  scenario 'User can sign in with vkontakte account' do
+    click_on "Sign in with vkontakte"
+    expect(page).to have_content 'Successfully authenticated from vkontakte account.'
+  end
+
+  scenario 'App handles an authentication error from vkontakte' do
+    OmniAuth.config.mock_auth[:vkontakte] = :invalid_credentials
+    click_on "Sign in with vkontakte"
+    expect(page).to have_content 'Invalid credentials'
+  end
 end
