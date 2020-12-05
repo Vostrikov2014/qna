@@ -10,9 +10,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:github, :vkontakte]
 
-  def self.find_for_oauth(auth)
-    FindForOauth.new(auth).call
-  end
+  #def self.find_for_oauth(auth)
+  #  FindForOauthService.new(auth).call
+  #end
 
   def author?(resource)
     resource.user_id == id
@@ -22,7 +22,7 @@ class User < ApplicationRecord
     resource.votes.exists?(user_id: id)
   end
 
-  def create_authorization(auth)
-    self.authorizations.create(provider: auth.provider, uid: auth.uid)
-  end
+  #def create_authorization(auth)
+  #  self.authorizations.create(provider: auth.provider, uid: auth.uid)
+  #end
 end

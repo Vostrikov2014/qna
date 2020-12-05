@@ -276,10 +276,10 @@ Devise.setup do |config|
                   Rails.application.credentials[Rails.env.to_sym][:github][:app_secret],
                   scope: 'user:email, read:user'
 
-  config.omniauth :facebook,
-                  Rails.application.credentials[Rails.env.to_sym][:facebook][:app_id],
-                  Rails.application.credentials[Rails.env.to_sym][:facebook][:app_secret],
-                  scope: 'email'
+  #config.omniauth :facebook,
+  #                Rails.application.credentials[Rails.env.to_sym][:facebook][:app_id],
+  #                Rails.application.credentials[Rails.env.to_sym][:facebook][:app_secret],
+  #                scope: 'email'
 
   config.omniauth :vkontakte,
                   Rails.application.credentials[Rails.env.to_sym][:vkontakte][:app_id],
