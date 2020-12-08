@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :links, only: :destroy
   resources :rewards, only: :index
   resources :comments, only: :create
+  resources :advanced_registrations, only: [:new, :create]
 
   mount ActionCable.server => '/cable'
 end

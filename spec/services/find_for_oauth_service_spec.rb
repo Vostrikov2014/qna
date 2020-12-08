@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe FindForOauthService do
   let!(:user) {create(:user)}
   let(:auth) {OmniAuth::AuthHash.new(provider: 'vkontakte', uid: '123456')}
-  subject { FindForOauthService.new(auth) }
+  let(:email) { nil }
+  subject { FindForOauthService.new(auth, email) }
 
   context 'user already has authorization' do
     it 'returns the user' do

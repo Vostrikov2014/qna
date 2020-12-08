@@ -52,6 +52,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
   describe 'vkontakte' do
     let(:oauth_data) { {'provider' => 'vkontakte', 'uid' => 0123} }
+    let(:email) { nil }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -85,6 +86,10 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
       it 'redirects to root path' do
         expect(response).to redirect_to root_path
+      end
+
+      it 'redirects to email confirmation path' do
+        expect(response).to redirect_to new_advanced_registration_path
       end
 
       it 'does not login user' do
