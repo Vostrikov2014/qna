@@ -108,6 +108,10 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     execjs (2.7.0)
     factory_bot (6.1.0)
@@ -363,6 +367,7 @@ DEPENDENCIES
   coffee-rails (~> 5.0)
   decent_exposure
   devise
+  dotenv-rails
   factory_bot_rails
   gon
   handlebars-source

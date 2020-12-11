@@ -1,27 +1,30 @@
 class FindForOauthService
   attr_reader :auth
 
-  def initialize(auth, email)
+  def initialize(auth)
     @auth = auth
-    @email = email
   end
 
   def call
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
 
-    email = @email || auth.info[:email]
-    #email = auth.info[:email] if auth.info && auth.info[:email]
-    email_from_user = auth.info[:mail_from_user] if auth.info && auth.info[:mail_from_user]
+    email = auth.info[:email]
+    password = Devise.friendly_token[0, 20]
     user = User.where(email: email).first
     if user
-      user.create_authorization(auth)
+      create_authorization(user, auth)
     else
-      password = Devise.friendly_token[0, 20]
       user = User.create!(email: email, password: password, password_confirmation: password)
-      user.create_authorization(auth)
+      create_authorization(user, auth)
     end
 
     user
+  end
+
+  private
+
+  def create_authorization(user, auth)
+    user.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 end
