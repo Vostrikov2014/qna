@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
 
   include Voted
 
+  authorize_resource
+
   def index
     @answers = @question.answers
   end
