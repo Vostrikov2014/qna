@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+
+  oauth:
+    error: "An unexpected error has occurred"
+    email_blank: "Provider %{provider} did not provide mail"
+    email:
+      send: "Send"
+  email_placeholder: "Enter mail"
