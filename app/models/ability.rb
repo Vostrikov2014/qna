@@ -35,9 +35,14 @@ class Ability
       user.author?(link.linkable)
     end
     can :select_best, Answer, user_id: user.id
-    can [:up, :down], [Question, Answer] do |resource|
+
+    can [:up, :down, :check_answer_author, :check_question_author], [Question, Answer] do |resource|
       !user.author?(resource)
     end
+    can :is_author, [Question, Answer, Link] do |resource|
+      user.author?(resource)
+    end
+
     can :cancel_vote, [Question, Answer]
   end
 end

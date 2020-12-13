@@ -5,12 +5,14 @@ module Voted
     before_action :set_votable, only: %i[up down cancel_vote]
 
     def up
-      @votable.create_positive_vote(current_user) unless current_user.author?(@votable)
+      authorize! :up, @votable
+      @votable.create_positive_vote(current_user)
       success_response
     end
 
     def down
-      @votable.create_negative_vote(current_user) unless current_user.author?(@votable)
+      authorize! :down, @votable
+      @votable.create_negative_vote(current_user)
       success_response
     end
 

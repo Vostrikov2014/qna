@@ -44,12 +44,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'Question was successfully deleted.'
-    else
-      return redirect_to questions_path, notice: 'Only the author can delete a question'
-    end
+    @question.destroy
+    redirect_to questions_path, notice: 'Question was successfully deleted.'
   end
 
 
@@ -64,9 +60,8 @@ class QuestionsController < ApplicationController
   end
 
   def check_question_author
-    unless current_user.author?(@question)
-      head(:forbidden)
-    end
+    authorize! :check_question_author, @question
+    head(:forbidden)
   end
 
   def publish_question

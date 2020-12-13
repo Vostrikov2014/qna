@@ -57,15 +57,13 @@ class AnswersController < ApplicationController
   end
 
   def check_question_author
-    unless current_user.author?(@answer.question)
-      head(:forbidden)
-    end
+    authorize! :check_question_author, @answer.question
+    head(:forbidden)
   end
 
   def check_answer_author
-    unless current_user.author?(@answer)
-      head(:forbidden)
-    end
+    authorize! :check_answer_author, @answer
+    head(:forbidden)
   end
 
   def publish_answer
