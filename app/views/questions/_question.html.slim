@@ -16,14 +16,14 @@
       span.rating = @question.rating
 
     - if current_user
-      - if cannot? :is_author, @question
+      - if can? :vote, @question
         = render 'votes/block', resource: @question
 
   - if @question.files.attached?
     - @question.files.each do |file|
       p id="attachment-#{file.id}"
         span = link_to file.filename.to_s, url_for(file)
-        - if can? :is_author, Question
+        - if can? :destroy, ActiveStorage::Attachment, attachment_path(file)
           span = link_to 'Delete file', attachment_path(file), method: :delete, remote: true, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
 
   - if @question.reward
@@ -33,7 +33,7 @@
     = render 'links/index', resource: @question
 
 
-  - if can? :is_author, Question
+  - if can? :destroy_author, @question
     p
       span = link_to 'Edit question', '#', class: 'edit-question-link btn btn-info' , data: { question_id: @question.id }
       span = link_to 'Delete question', question_path(@question), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
@@ -41,4 +41,5 @@
     div id="question-#{@question.id}-errors"
       = render 'shared/errors', resource: @question
 
-    = render 'questions/form', question: @question
+    - if can? :read, Question
+      = render 'questions/form', question: @question

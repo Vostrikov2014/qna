@@ -16,29 +16,29 @@
         span.rating= answer.rating
 
         - if current_user
-          - if cannot? :is_author, answer
+          - if can? :vote, answer
             = render 'votes/block', resource: answer
 
     - if answer.files.attached?
       - answer.files.each do |file|
         p id="attachment-#{file.id}"
           span = link_to file.filename.to_s, url_for(file)
-          - if can? :is_author, answer
+          - if can? :destroy, ActiveStorage::Attachment, attachment_path(file)
             span = link_to 'Delete file', attachment_path(file), method: :delete, remote: true, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
 
     -if answer&.links.present?
       = render 'links/index', resource: answer
 
-    - if can? :is_author, answer
+    - if can? :destroy_author, answer
       p
         span = link_to 'Edit answer', '#', class: 'edit-answer-link btn btn-info', data: { answer_id: answer.id }
         span = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
 
-    - if can? :is_author, answer
+    - if can? :select_best, answer
       - if answer.best?
         p class='best-answer-title' This is the best answer!
       - else
         span = link_to 'Select best!', select_best_answer_path(answer), class: 'best-answer-link btn btn-success', method: :post, remote: true
 
-    - if can? :is_author, answer
+    - if can? :read, answer
       = render 'answers/form', answer: answer

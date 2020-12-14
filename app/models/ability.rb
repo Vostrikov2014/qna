@@ -28,6 +28,10 @@ class Ability
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer, Comment], user_id: user.id
     can :destroy, [Question, Answer, Comment], user_id: user.id
+
+    can :destroy_author, [Question, Answer] do |resource|
+      user.author?(resource)
+    end
     can :destroy, ActiveStorage::Attachment do |attachment|
       user.author?(attachment.record)
     end
@@ -36,13 +40,8 @@ class Ability
     end
     can :select_best, Answer, user_id: user.id
 
-    can [:up, :down, :check_answer_author, :check_question_author], [Question, Answer] do |resource|
+    can [:up, :down, :check_answer_author, :check_question_author, :vote], [Question, Answer] do |resource|
       !user.author?(resource)
     end
-    can :is_author, [Question, Answer, Link] do |resource|
-      user.author?(resource)
-    end
-
-    can :cancel_vote, [Question, Answer]
   end
 end
