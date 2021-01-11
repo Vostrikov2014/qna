@@ -13,6 +13,12 @@ FactoryBot.define do
     title { nil }
   end
 
+  trait :with_links do
+    before :create do |question|
+      create_list(:link, 3, linkable: question)
+    end
+  end
+
   trait :with_files do
     after :create do |question|
       file_path1 = Rails.root.join('app', 'assets', 'images', 'qna1.jpg')
