@@ -11,12 +11,12 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     before { login(user) }
 
-    context 'валидное создание / with valid attributes' do
-      it 'сохранение ответа в базе данных / save a answer in the database' do
+    context 'with valid attributes' do
+      it 'save a answer in the database' do
         expect { post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js } }.to change(question.answers, :count).by(1)
       end
 
-      it 'ответил аутентифицированный пользователь / authenticated user to be author of answer' do
+      it 'authenticated user to be author of answer' do
         post :create, params: { question_id: answer.question, answer: attributes_for(:answer), format: :js }
         expect(user).to be_author(assigns(:answer))
       end
@@ -27,8 +27,8 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'не валидное создание / with invalid attributes' do
-      it 'не записан в базу данных / does not save the answer' do
+    context 'with invalid attributes' do
+      it 'does not save the answer' do
         expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js } }.to_not change(Answer, :count)
       end
 
@@ -42,13 +42,13 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #update' do
     before { login(user) }
 
-    context 'валидное обновление / with valid attributes' do
-      it 'устанавливает переменную answer в объект @answer по id / assigns requested answer to @answer' do
+    context 'with valid attributes' do
+      it 'assigns requested answer to @answer' do
         patch :update, params: { id: answer, answer: attributes_for(:answer), format: :js }
         expect(assigns(:answer)).to eq answer
       end
 
-      it 'изменяет существующие атрибуты / changes answer attributes' do
+      it 'changes answer attributes' do
         patch :update, params: { id: answer, answer: {body: 'new body'}, format: :js }
         answer.reload
         expect(answer.body).to eq 'new body'
@@ -60,8 +60,8 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'не валидное обновление / with invalid attributes' do
-      it 'не изменяется ответ / does not change answer' do
+    context 'with invalid attributes' do
+      it 'does not change answer' do
         patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
         answer.reload
         expect(answer.body).to eq 'My answer'
@@ -77,8 +77,8 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     before { login(user) }
 
-    context 'автор / author' do
-      it 'удалить ответ / delete the answer' do
+    context 'author' do
+      it 'delete the answer' do
         expect { delete :destroy, params: { id: answer, format: :js } }.to change(Answer, :count).by(-1)
       end
 
@@ -88,8 +88,8 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'не автор / not author' do
-      it 'ответ не удаляется / no delete the answer' do
+    context 'not author' do
+      it 'no delete the answer' do
         expect { delete :destroy, params: { id: other_answer, format: :js } }.to_not change(Answer, :count)
       end
 
@@ -131,6 +131,30 @@ RSpec.describe AnswersController, type: :controller do
       it 'returns forbidden' do
         expect(response).to be_forbidden
       end
+    end
+  end
+
+  describe 'Active job notice' do
+    before do
+      login(user)
+      clear_enqueued_jobs
+    end
+
+    subject { post :create, params: { question_id: question, answer: answer_params, format: :js } }
+
+    let(:answer_params) { attributes_for(:answer) }
+
+    it 'answer owner subscribed to question' do
+      expect { subject }.to change(enqueued_jobs, :count).by(1)
+    end
+
+    it 'question subscribers not exists' do
+      question.subscriptions.delete_all
+      expect { subject }.to change(enqueued_jobs, :count).by(0)
+    end
+
+    it 'create correct job' do
+      expect { subject }.to have_enqueued_job(NewAnswerNoticeJob)
     end
   end
 end
