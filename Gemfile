@@ -29,9 +29,14 @@ gem 'cancancan'
 gem 'doorkeeper'
 gem 'active_model_serializers', '~> 0.10'
 gem 'oj'
+
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
+
+gem 'mysql2', :platform => :ruby
+gem 'thinking-sphinx'
+gem 'database_cleaner'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
