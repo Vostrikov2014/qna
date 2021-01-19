@@ -35,6 +35,8 @@ gem 'sinatra', require: false
 gem 'whenever', require: false
 
 gem 'mysql2',          '~> 0.4',    :platform => :ruby
+# if not installed mysql2, install: sudo apt install mysql-client mysql-server libmysqlclient-dev
+
 gem 'jdbc-mysql',      '~> 5.1.35', :platform => :jruby
 gem 'thinking-sphinx', '~> 5.1'
 gem 'database_cleaner', '~> 1.8', '>= 1.8.3'
@@ -56,6 +58,12 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'dotenv-rails'
   gem 'letter_opener'
+
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-passenger', require: false
 end
 
 group :test do
