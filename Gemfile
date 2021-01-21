@@ -13,7 +13,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'slim-rails'
 gem 'decent_exposure'
-gem 'devise'
+#gem 'devise'
+gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.5.0'
 gem "twitter-bootstrap-rails"

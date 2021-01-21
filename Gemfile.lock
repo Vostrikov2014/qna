@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/heartcombo/devise.git
+  revision: c43ae8cb4723726916a01a9b7f561b6efe3a3308
+  branch: ca-omniauth-2
+  specs:
+    devise (4.7.3)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -129,12 +141,6 @@ GEM
     database_cleaner (1.8.5)
     decent_exposure (3.0.4)
       activesupport (>= 4.0)
-    devise (4.7.3)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0)
-      responders
-      warden (~> 1.2.3)
     diff-lcs (1.4.4)
     doorkeeper (5.4.0)
       railties (>= 5)
@@ -449,7 +455,7 @@ DEPENDENCIES
   coffee-rails (~> 5.0)
   database_cleaner (~> 1.8, >= 1.8.3)
   decent_exposure
-  devise
+  devise!
   doorkeeper
   dotenv-rails
   factory_bot_rails

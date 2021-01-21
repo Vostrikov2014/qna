@@ -27,8 +27,5 @@ module Qna
                        controller_specs: true
 
     end
-
-    config.assets.initialize_on_precompile = false
-
   end
 end
