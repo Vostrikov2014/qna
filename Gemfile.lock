@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/heartcombo/devise.git
-  revision: c43ae8cb4723726916a01a9b7f561b6efe3a3308
+  revision: 1d138dd40cdc291a427b89027d16a869818a5c19
   branch: ca-omniauth-2
   specs:
     devise (4.7.3)
@@ -174,7 +174,7 @@ GEM
       concurrent-ruby (~> 1.0)
     innertube (1.1.0)
     io-like (0.3.1)
-    jbuilder (2.10.1)
+    jbuilder (2.11.0)
       activesupport (>= 5.0.0)
     joiner (0.5.0)
       activerecord (>= 6.0.0.rc2)

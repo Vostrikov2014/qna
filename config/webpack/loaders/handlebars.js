@@ -1,4 +1,1 @@
-module.exports = {
-    test: /\.hbs$/,
-    loader: 'handlebars-loader'
-}
+module.exports = {test: /\.hbs$/, loader: 'handlebars-loader'}
