@@ -43,6 +43,7 @@ gem 'thinking-sphinx', '~> 5.1'
 gem 'database_cleaner', '~> 1.8', '>= 1.8.3'
 
 gem 'mini_racer'
+#gem 'therubyracer'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -67,6 +68,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
+  gem 'capistrano-sidekiq', require: false
 end
 
 group :test do
