@@ -45,6 +45,7 @@ gem 'database_cleaner', '~> 1.8', '>= 1.8.3'
 gem 'mini_racer'
 #gem 'therubyracer'
 
+gem 'launchy'
 gem 'letter_opener'
 
 group :development, :test do
