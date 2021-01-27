@@ -60,15 +60,14 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "qna_production"
 
-  config.action_mailer.raise_delivery_errors = false
-
   # it was in production
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: '206.189.110.91', port: 2222 }
+  config.action_mailer.default_url_options = { host: 'http://206.189.110.91', port: 80 }
 
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
