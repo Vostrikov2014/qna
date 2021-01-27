@@ -68,16 +68,33 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'http://206.189.110.91' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 587,
-    user_name: Rails.application.credentials[Rails.env.to_sym][:gmail][:user_name],
-    password: Rails.application.credentials[Rails.env.to_sym][:gmail][:password],
-    authentication: 'plain',
-    enable_starttls_auto: true
+    :user_name => '681c8c61906919',
+    :password => '78852a24d894f2',
+    :address => 'smtp.mailtrap.io',
+    :domain => 'smtp.mailtrap.io',
+    :port => '2525',
+    :authentication => :cram_md5
   }
+
+  #config.action_mailer.default_url_options = { host: 'http://206.189.110.91' }
+  #config.action_mailer.default_options = { from: '3627733@gmail.com' }
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.smtp_settings = {
+  #  address: 'smtp.gmail.com',
+  #  port: 587,
+  #  domain: 'http://206.189.110.91',
+  #  #user_name: Rails.application.credentials[Rails.env.to_sym][:gmail][:user_name],
+  #  #password: Rails.application.credentials[Rails.env.to_sym][:gmail][:password],
+  #  user_name:            '3627733@gmail.com',
+  #  password:             'vd253835',
+  #  authentication: 'plain',
+  #  enable_starttls_auto: true
+  #}
+
   #config.action_mailer.delivery_method = :letter_opener
   #config.action_mailer.perform_deliveries = true
-  #config.action_mailer.raise_delivery_errors = false
+  #config.action_mailer.raise_delivery_errors = true
+
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
