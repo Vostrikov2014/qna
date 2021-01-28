@@ -13,6 +13,9 @@ html
     .navbar.navbar-default.navbar-static-top
       .container
         a.navbar-brand href="/"Qna
+
+        = render 'search/form'
+
         span.navbar-text
           - if user_signed_in?
             = "Welcome!, #{current_user.email} | "
@@ -31,4 +34,4 @@ html
     footer
       hr
         .container
-          p &copy; Rubyst.ru
+          p &copy;
