@@ -45,6 +45,7 @@ class AnswersController < ApplicationController
   private
 
   def find_question
+    gon.question_id = params[:question_id]
     @question = Question.find(params[:question_id])
   end
 
@@ -68,6 +69,7 @@ class AnswersController < ApplicationController
 
   def publish_answer
     return if @answer.errors.any?
-    ActionCable.server.broadcast("questions_#{@answer.question_id}_answers", @answer.attributes.merge(rating: @answer.rating))
+    #ActionCable.server.broadcast("questions_#{@answer.question_id}", @answer.attributes.merge(rating: @answer.rating))
+    AnswersChannel.broadcast_to("questions_#{@answer.question_id}", @answer.attributes.merge(rating: @answer.rating))
   end
 end

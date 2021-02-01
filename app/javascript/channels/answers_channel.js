@@ -2,11 +2,17 @@ import consumer from "./consumer"
 
 $(document).on('turbolinks:load', function() {
     consumer.subscriptions.create({ channel: "AnswersChannel", question_id: gon.question_id }, {
+        // Called when the subscription is ready for use on the server.
+       connected() {
+            console.log('connected')
+        },
         received(data) {
-            data.is_answer_owner = gon.user_id === data.answer.user_id
+            //data.is_answer_owner = gon.user_id === data.answer.user_id
+            data.is_answer_owner = gon.user_id === data.user_id
             if (data.is_answer_owner) { return }
             const template = require('./templates/answer.hbs')
-            data.is_question_owner = gon.user_id === gon.question_owner_id
+           data.is_question_owner = gon.user_id === gon.question_owner_id
+            console.log(data)
             $('#question-' + gon.question_id + '-answers').append(template(data))
         }
     })

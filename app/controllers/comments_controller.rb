@@ -35,6 +35,8 @@ class CommentsController < ApplicationController
   def publish_comment
     return if @commentable.errors.any?
     question_id = @commentable.is_a?(Question) ? @commentable.id : @commentable.question_id
-    ActionCable.server.broadcast("questions_#{question_id}_comments", @comment)
+    gon.question_id = question_id
+    #ActionCable.server.broadcast("questions_#{question_id}_comments", @comment)
+    CommentsChannel.broadcast_to("questions_#{question_id}_comments", @comment)
   end
 end

@@ -13,13 +13,13 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'slim-rails'
 gem 'decent_exposure'
-#gem 'devise'
 gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.5.0'
 gem "twitter-bootstrap-rails"
 gem 'cocoon'
 gem 'coffee-rails', '~> 5.0'
+#gem 'skim'
 gem 'gon'
 gem 'handlebars-source'
 gem 'omniauth'
@@ -45,8 +45,10 @@ gem 'database_cleaner', '~> 1.8', '>= 1.8.3'
 gem 'mini_racer'
 #gem 'therubyracer'
 
-gem 'launchy'
-gem 'letter_opener'
+#gem 'launchy'
+#gem 'letter_opener'
+
+gem 'redis'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

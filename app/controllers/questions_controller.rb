@@ -52,6 +52,7 @@ class QuestionsController < ApplicationController
   private
 
   def load_question
+    gon.question_id = params[:id]
     @question = Question.with_attached_files.find(params[:id])
   end
 
@@ -66,6 +67,7 @@ class QuestionsController < ApplicationController
 
   def publish_question
     return if @question.errors.any?
-    ActionCable.server.broadcast('questions', question: @question)
+    #ActionCable.server.broadcast('questions', question: @question)
+    QuestionsChannel.broadcast_to('questions', question: @question)  #правильный вариант
   end
 end

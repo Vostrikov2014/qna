@@ -21,6 +21,14 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :rateable do
+    member do
+      patch :rate_up
+      patch :rate_down
+      delete :cancel_vote
+    end
+  end
+
   resources :questions, concerns: :votable do
     resources :answers, shallow: true, concerns: :votable do
       member do
