@@ -69,6 +69,7 @@ class AnswersController < ApplicationController
 
   def publish_answer
     return if @answer.errors.any?
+    gon.question_id = params[:question_id]
     #ActionCable.server.broadcast("questions_#{@answer.question_id}", @answer.attributes.merge(rating: @answer.rating))
     AnswersChannel.broadcast_to("questions_#{@answer.question_id}", @answer.attributes.merge(rating: @answer.rating))
   end

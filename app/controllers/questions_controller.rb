@@ -69,5 +69,6 @@ class QuestionsController < ApplicationController
     return if @question.errors.any?
     #ActionCable.server.broadcast('questions', question: @question)
     QuestionsChannel.broadcast_to('questions', question: @question)  #правильный вариант
+    #QuestionsChannel.broadcast_to('questions', ApplicationController.render(partial: 'questions/question', locals: { question: @question }))
   end
 end
