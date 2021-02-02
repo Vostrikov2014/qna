@@ -3,7 +3,7 @@
 # далее специальные директивы устанавливаем рабочую диррикторию для проекта и pid, файл
 # где будет храниться id процесса. Именно по нему капистрано будет понимать какой процесс
 # нужно будет останавливать и т.д.
-app_path = "/home/deployer/qna"
+app_path = "/home/deploy/qna"
 working_directory "#{app_path}/current"
 pid               "#{app_path}/current/tmp/pids/unicorn.pid"
 
