@@ -50,6 +50,7 @@ gem 'mini_racer'
 #gem 'letter_opener'
 
 gem 'redis'
+gem 'redis-rails'
 
 gem 'unicorn'
 
